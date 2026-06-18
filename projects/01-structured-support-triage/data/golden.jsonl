@@ -1,0 +1,8 @@
+{"ticket":"My monitor will not turn on after reconnecting HDMI.","expected_category":"hardware","expected_priority":"normal","expected_escalation":false}
+{"ticket":"I was charged twice for the same invoice and need a refund.","expected_category":"billing","expected_priority":"high","expected_escalation":true}
+{"ticket":"I cannot log in after password reset; the MFA code never arrives.","expected_category":"account","expected_priority":"high","expected_escalation":false}
+{"ticket":"The desktop app crashes every time I export a CSV.","expected_category":"software","expected_priority":"high","expected_escalation":false}
+{"ticket":"Please update the company address on our next invoice.","expected_category":"billing","expected_priority":"low","expected_escalation":false}
+{"ticket":"Security alert says an unknown device accessed my account.","expected_category":"account","expected_priority":"urgent","expected_escalation":true}
+{"ticket":"The printer jams whenever we print shipping labels.","expected_category":"hardware","expected_priority":"normal","expected_escalation":false}
+{"ticket":"I need help installing the latest software update.","expected_category":"software","expected_priority":"normal","expected_escalation":false}

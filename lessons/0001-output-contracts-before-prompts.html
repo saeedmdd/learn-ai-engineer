@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0001: Output Contracts Before Prompts</title>
+  <style>
+    :root {
+      --ink: #121821;
+      --muted: #556170;
+      --line: #d8dee8;
+      --paper: #fdfbf6;
+      --panel: #f2efe7;
+      --accent: #0f766e;
+      --bad: #9f1239;
+      --good: #166534;
+    }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 17px/1.58 ui-serif, Georgia, "Times New Roman", serif;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+    h1, h2, h3, button, label, .eyebrow {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 34px 0 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      margin-bottom: 10px;
+    }
+    .lede {
+      color: var(--muted);
+      max-width: 68ch;
+      font-size: 1.12rem;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      margin: 18px 0;
+    }
+    pre {
+      margin: 16px 0;
+      padding: 18px;
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .exercise {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .ticket {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fffdf8;
+    }
+    .ticket p {
+      margin: 0 0 10px;
+    }
+    select, button {
+      font: inherit;
+    }
+    select {
+      min-width: 90px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+    }
+    button {
+      border: 0;
+      border-radius: 6px;
+      background: var(--accent);
+      color: white;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .result {
+      min-height: 1.5em;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
+    }
+    .good {
+      color: var(--good);
+    }
+    .bad {
+      color: var(--bad);
+    }
+    a {
+      color: var(--accent);
+    }
+    @media print {
+      body {
+        background: white;
+      }
+      main {
+        padding: 24px 0;
+      }
+      .panel, .ticket {
+        background: white;
+      }
+      button, select {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Lesson 0001</div>
+    <h1>Output Contracts Before Prompts</h1>
+    <p class="lede">Your first production habit: define the shape and acceptance criteria of an AI output before tuning a prompt. The model call should fit into typed application code, not leak uncertainty into the rest of the system.</p>
+
+    <section>
+      <h2>The One Idea</h2>
+      <p>A production LLM feature is not "prompt in, text out." It is a contract:</p>
+      <div class="panel">
+        <p><strong>Task:</strong> classify and summarize a support ticket.</p>
+        <p><strong>Schema:</strong> produce typed fields the app can validate.</p>
+        <p><strong>Eval set:</strong> run representative tickets through the system and measure expected behavior.</p>
+      </div>
+      <p>Prompt wording comes after this. Without a schema and eval set, prompt changes are guesses.</p>
+    </section>
+
+    <section>
+      <h2>A Small Contract</h2>
+      <pre><code>{
+  "category": "hardware | software | billing | account | other",
+  "priority": "low | normal | high | urgent",
+  "summary": "short user-facing summary",
+  "suggested_reply": "safe draft reply",
+  "confidence": 0.0,
+  "escalation_required": false
+}</code></pre>
+      <p>The application should reject missing fields, unknown categories, empty summaries, non-boolean escalation flags, and confidence values outside <code>0.0</code> to <code>1.0</code>.</p>
+    </section>
+
+    <section>
+      <h2>Practice</h2>
+      <p>Use the legend, classify each ticket, then check your answers.</p>
+      <div class="panel">
+        <p><strong>A</strong> hardware &nbsp; <strong>B</strong> software &nbsp; <strong>C</strong> billing &nbsp; <strong>D</strong> account</p>
+      </div>
+
+      <div class="exercise" id="exercise">
+        <div class="ticket">
+          <p>"My monitor will not turn on after reconnecting HDMI."</p>
+          <label>Category
+            <select data-answer="A">
+              <option value="">-</option>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+            </select>
+          </label>
+        </div>
+        <div class="ticket">
+          <p>"I was charged twice for the same invoice and need a refund."</p>
+          <label>Category
+            <select data-answer="C">
+              <option value="">-</option>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+            </select>
+          </label>
+        </div>
+        <div class="ticket">
+          <p>"I cannot log in after password reset; the MFA code never arrives."</p>
+          <label>Category
+            <select data-answer="D">
+              <option value="">-</option>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <p>
+        <button type="button" id="check">Check</button>
+      </p>
+      <p class="result" id="result" aria-live="polite"></p>
+    </section>
+
+    <section>
+      <h2>Project Slice</h2>
+      <p>Now run the starter project. It implements the same idea with no API key: a typed schema, a baseline classifier, golden examples, and an evaluator.</p>
+      <pre><code>cd projects/01-structured-support-triage
+python3 -m unittest discover -s tests
+PYTHONPATH=. python3 -m support_triage.cli --eval data/golden.jsonl</code></pre>
+      <p>Once this is clear, the next step is replacing the baseline classifier with a real model call while keeping the schema and evals unchanged.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <p>Keep these open while working: <a href="../reference/glossary.html">AI Engineering Glossary</a> and <a href="../reference/production-llm-checklist.html">Production LLM Checklist</a>.</p>
+      <p>Primary source to read next: <a href="https://developers.openai.com/api/docs/guides/production-best-practices">OpenAI Production Best Practices</a>.</p>
+      <p>Ask the agent follow-up questions when the schema, eval design, or failure cases feel unclear.</p>
+    </section>
+  </main>
+
+  <script>
+    const button = document.querySelector("#check");
+    const result = document.querySelector("#result");
+
+    button.addEventListener("click", () => {
+      const selects = [...document.querySelectorAll("select[data-answer]")];
+      const unanswered = selects.filter((select) => !select.value).length;
+      const correct = selects.filter((select) => select.value === select.dataset.answer).length;
+
+      if (unanswered > 0) {
+        result.textContent = `Answer ${unanswered} more before checking.`;
+        result.className = "result bad";
+        return;
+      }
+
+      result.textContent = `${correct}/${selects.length} correct. ${correct === selects.length ? "You can move to the project." : "Review the contract and try again."}`;
+      result.className = `result ${correct === selects.length ? "good" : "bad"}`;
+    });
+  </script>
+</body>
+</html>

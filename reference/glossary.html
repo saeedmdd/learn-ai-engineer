@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Engineering Glossary</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #5f6b7a;
+      --line: #d7dde5;
+      --paper: #fbfbf8;
+      --accent: #0f766e;
+    }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.55 ui-serif, Georgia, "Times New Roman", serif;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+    h1, h2 {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.1;
+    }
+    h1 {
+      font-size: 2.4rem;
+      margin: 0 0 8px;
+    }
+    .lede {
+      color: var(--muted);
+      max-width: 68ch;
+      margin-bottom: 32px;
+    }
+    dl {
+      display: grid;
+      grid-template-columns: minmax(150px, 220px) 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    dt, dd {
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+    }
+    dt {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
+      color: var(--accent);
+      padding-right: 20px;
+    }
+    dd {
+      margin: 0;
+    }
+    a {
+      color: var(--accent);
+    }
+    @media (max-width: 680px) {
+      dl {
+        display: block;
+      }
+      dt {
+        border-bottom: 0;
+        padding-bottom: 2px;
+      }
+      dd {
+        padding-top: 0;
+      }
+    }
+    @media print {
+      body {
+        background: white;
+      }
+      main {
+        padding: 24px 0;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>AI Engineering Glossary</h1>
+    <p class="lede">Use these terms consistently across lessons and projects. The definitions are intentionally practical: each term is framed by what an engineer must decide or verify.</p>
+
+    <dl>
+      <dt>LLM</dt>
+      <dd>A language model used as a software dependency. Treat it as nondeterministic infrastructure with latency, cost, quality, and safety constraints.</dd>
+
+      <dt>Token</dt>
+      <dd>The unit a model reads and writes. Tokens drive context length, latency, and cost, so token budgets are production constraints.</dd>
+
+      <dt>Prompt contract</dt>
+      <dd>The full agreement around a model call: task, inputs, context, output shape, refusal rules, and examples.</dd>
+
+      <dt>Structured output</dt>
+      <dd>A model response constrained to a known schema, such as JSON matching a typed object. Validation is part of the feature, not cleanup.</dd>
+
+      <dt>Tool calling</dt>
+      <dd>A pattern where the model chooses a typed function call and your application executes it. The application owns permissions and side effects.</dd>
+
+      <dt>Embedding</dt>
+      <dd>A vector representation of text or other data used for similarity search and retrieval.</dd>
+
+      <dt>Vector store</dt>
+      <dd>A database or index that retrieves embeddings by similarity, often with metadata filters.</dd>
+
+      <dt>RAG</dt>
+      <dd>Retrieval-augmented generation: retrieve relevant external context, then generate an answer grounded in that context.</dd>
+
+      <dt>Reranker</dt>
+      <dd>A second-stage model or scoring method that reorders retrieved documents for relevance before generation.</dd>
+
+      <dt>Eval</dt>
+      <dd>A repeatable check that measures whether an AI system meets expected behavior. Evals are regression tests for probabilistic systems.</dd>
+
+      <dt>Golden set</dt>
+      <dd>A curated set of representative examples with expected behavior. It should include normal, edge, and adversarial cases.</dd>
+
+      <dt>Hallucination</dt>
+      <dd>An unsupported or false model output. In production, define how the system detects, avoids, refuses, or contains it.</dd>
+
+      <dt>Prompt injection</dt>
+      <dd>An input that tries to override system instructions or misuse tools. Treat external content as data, not authority.</dd>
+
+      <dt>Agent</dt>
+      <dd>A stateful workflow where a model plans or chooses actions through tools. Agents need boundaries, traces, approval points, and recovery behavior.</dd>
+
+      <dt>Trace</dt>
+      <dd>A record of model calls, prompts, tool calls, retrieved context, outputs, latency, cost, and errors for one run.</dd>
+
+      <dt>Human in the loop</dt>
+      <dd>A deliberate pause for human review before a risky, irreversible, or high-impact action continues.</dd>
+    </dl>
+
+    <p><a href="../lessons/0001-output-contracts-before-prompts.html">Return to Lesson 0001</a></p>
+  </main>
+</body>
+</html>
